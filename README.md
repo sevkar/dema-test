@@ -33,6 +33,10 @@ Copy `.env.example` to `.env` and fill in the required environment variables.
 
 Update `DATABASE_DSN` in the `.env` file with your database connection string.
 
+## Example Analytics Queries
+
+Example queries can be found in the `analytics.sql` file.
+
 ## Next Steps and TODOs
 
 - Run Prefect server and flows in Docker container
@@ -40,3 +44,6 @@ Update `DATABASE_DSN` in the `.env` file with your database connection string.
 - Add integration tests for the pipeline
 - Optimize the pipeline for large datasets 
 __(current implementation works for relatively small datasets, work with raw data should be done in chunks)__
+- Add `analytics` schema to create customized views and tables for analytics purposes
+- Assuming pipeline will be run on a regular basis, add `cron` scheduler 
+- to the flow and download data for the last period from the source

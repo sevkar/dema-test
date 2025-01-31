@@ -143,7 +143,7 @@ def transform_orders() -> None:
     engine = create_engine(settings.DATABASE_DSN)
     with engine.connect() as conn:
         orders_stmt = text(
-            'SELECT "orderId", "dateTime", currency, "shippingCost", channel, campaign '
+            'SELECT "orderId", "dateTime", currency, "shippingCost", channel, campaign, "productId", quantity, amount '
             "FROM raw.orders"
         )
         result = conn.execute(orders_stmt).fetchall()
@@ -167,8 +167,23 @@ def transform_orders() -> None:
         for row in result
     ]
 
+    order_line_item_stmt = text(
+        "INSERT INTO staging.order_line_item (order_id, product_id, quantity, amount) "
+        "VALUES (:order_id, :product_id, :quantity, :amount);"
+    )
+    order_line_item_values = [
+        {
+            "order_id": row[0],
+            "product_id": row[6],
+            "quantity": row[7],
+            "amount": row[8],
+        }
+        for row in result
+    ]
+
     with engine.connect() as conn:
         conn.execute(order_stmt, order_values)
+        conn.execute(order_line_item_stmt, order_line_item_values)
         conn.commit()
 
     logger.info("Orders transformed")

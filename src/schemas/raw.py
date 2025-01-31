@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, PositiveInt, PositiveFloat
+from pydantic import BaseModel, ConfigDict, NonNegativeInt, NonNegativeFloat
 from pydantic.alias_generators import to_camel
 
 
@@ -11,7 +11,7 @@ class RawBaseModel(BaseModel):
 class RawProduct(RawBaseModel):
     product_id: str
     name: str
-    quantity: PositiveInt
+    quantity: NonNegativeInt
     category: str
     sub_category: str
 
@@ -20,9 +20,9 @@ class RawOrder(RawBaseModel):
     order_id: str
     product_id: str
     currency: str
-    quantity: PositiveInt
-    shipping_cost: PositiveFloat
-    amount: PositiveFloat
+    quantity: NonNegativeInt
+    shipping_cost: NonNegativeFloat
+    amount: NonNegativeFloat
     channel: str
     channel_group: str
     campaign: str | None = None

@@ -31,13 +31,14 @@ def upgrade() -> None:
         CREATE TABLE staging.subcategory (
             id    SERIAL PRIMARY KEY,
             category_id        INT NOT NULL REFERENCES staging.category(id),
-            name  TEXT NOT NULL UNIQUE
+            name  TEXT NOT NULL
         );
+        CREATE UNIQUE INDEX idx_subcategory_category_id_name ON staging.subcategory (category_id, name);
         
         CREATE TABLE staging.product (
             product_id TEXT PRIMARY KEY,
             name     TEXT NOT NULL,
-            sub_category_id  INT NOT NULL REFERENCES staging.subcategory(id),
+            sub_category_id  INT REFERENCES staging.subcategory(id),
             quantity         INT NOT NULL,
             created_at       TIMESTAMP NOT NULL DEFAULT now()
         );
