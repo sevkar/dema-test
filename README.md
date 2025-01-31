@@ -43,7 +43,7 @@ Example queries can be found in the `analytics.sql` file.
 
 ## Next Steps and TODOs
 
-- Run Prefect server and flows in Docker container
+- Run flows in Docker container
 - Add unittests for the pipeline tasks
 - Add integration tests for the pipeline
 - Optimize the pipeline for large datasets 
