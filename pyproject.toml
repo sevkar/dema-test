@@ -1,0 +1,22 @@
+[project]
+name = "dema-pipeline"
+version = "0.1.0"
+description = "Test task for Dema"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "alembic>=1.14.1",
+    "pandas>=2.2.3",
+    "prefect>=3.1.15",
+    "psycopg2-binary>=2.9.10",
+    "pydantic>=2.10.6",
+    "pydantic-settings>=2.7.1",
+    "requests>=2.32.3",
+    "sqlalchemy>=2.0.37",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.1.0",
+    "ruff>=0.9.4",
+]
