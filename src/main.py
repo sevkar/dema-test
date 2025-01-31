@@ -32,9 +32,11 @@ def pipeline() -> None:
     orders_result = persist_raw_data.submit(data=validated_orders, table="orders")
 
     # update lookup tables
+    categories_result = update_categories.submit(wait_for=[inventory_result])
     updates = [
-        update_categories.submit(wait_for=[inventory_result]),
-        update_products.submit(wait_for=[inventory_result]),
+        update_products.submit(
+            wait_for=[inventory_result, categories_result]
+        ),  # products depend on categories
         update_channels.submit(wait_for=[orders_result]),
         update_campaigns.submit(wait_for=[orders_result]),
     ]

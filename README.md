@@ -27,6 +27,10 @@ make local_run
 ```
 It will run database in Docker and Prefect flow in the local environment.
 
+Access the Prefect UI at http://localhost:4200/runs
+
+![run_flow.png](assets/run_flow.png)
+
 ## Development
 
 Copy `.env.example` to `.env` and fill in the required environment variables.
@@ -44,6 +48,9 @@ Example queries can be found in the `analytics.sql` file.
 - Add integration tests for the pipeline
 - Optimize the pipeline for large datasets 
 __(current implementation works for relatively small datasets, work with raw data should be done in chunks)__
-- Add `analytics` schema to create customized views and tables for analytics purposes
-- Assuming pipeline will be run on a regular basis, add `cron` scheduler 
-- to the flow and download data for the last period from the source
+- Depending on the data source, consider using an incremental load strategy
+- If needed, historical data can be stored in and calculated in `staging` schema
+- To efficiently handle large datasets, consider using columnar storage like Parquet or Redshift.
+- Add `analytics` schema to create customized views and tables for analytics purposes: 
+    - Create a materialized view for the most frequently used queries
+- Assuming pipeline will be run on a regular basis, add `cron` scheduler to the flow and download data for the last period from the source
