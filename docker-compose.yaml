@@ -12,8 +12,15 @@ services:
 
   prefect:
     image: prefecthq/prefect:3-python3.12
-    ports:
-        - "4200:4200"
+    network_mode: host
+    command: ["prefect", "server", "start"]
+    healthcheck:
+      test: python -c "import requests; requests.get('http://localhost:4200/api/health').raise_for_status()"
+      start_period: 10s
+      start_interval: 1s
+      interval: 30s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

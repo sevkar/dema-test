@@ -7,6 +7,6 @@ lint:
 
 local_run:
 	cp .env.example .env
-	docker compose up -d
+	docker compose up -d --wait
 	uv run alembic upgrade head
 	uv run src/main.py
